@@ -22,3 +22,4 @@ def top_10_cities_with_max_num_of_theaters():
 #     print(i)
 
 # 2. top 10 theatres nearby given coordinates
+
