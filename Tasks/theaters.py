@@ -23,3 +23,17 @@ def top_10_cities_with_max_num_of_theaters():
 
 # 2. top 10 theatres nearby given coordinates
 
+def top_10_theaters_nearby_given_coordinates(lat, long):
+    result = theaters.find({
+        "location.geo": 
+            {
+                    "$near": 
+                    {
+                        "$geometry": {"type": "Point", "coordinates": [lat, long]},  
+                    }
+                }
+    }, {"_id": 0}).limit(10)
+    return result
+
+# for i in top_10_theaters_nearby_given_coordinates(-93.24565, 44.85466):
+#     print(i)
