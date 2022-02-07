@@ -40,7 +40,7 @@ def total_comments_each_month_given_year(year):
     ])
     return result
 
-# for i in total_comments_each_month_given_year(2012):
-#     print(i)
+for i in total_comments_each_month_given_year(2012):
+    print(i)
 
 

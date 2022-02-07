@@ -162,4 +162,18 @@ def top_N_actors_starred_in_max_num_of_movies_given_genre(genre, N):
 # for i in top_N_actors_starred_in_max_num_of_movies_given_genre("Drama", 10):
 #     print(i)
 
-# 4. Find top `N` movies for each genre with the highest IMDB rating (#TODO)
+# 4. Find top `N` movies for each genre with the highest IMDB rating
+
+def top_N_movies_for_each_genre_with_highest_IMDB(N):
+    result = movies.aggregate([
+        {"$unwind": "$genres"},
+        {"$group": {"_id": {"genres": "$genres"}, "filmPlusRating": {"$push": {"title": "$title", "rating": "$imdb.rating"}}}},
+        {"$unwind": "$filmPlusRating"},
+        {"$sort": {"filmPlusRating.rating": -1}},
+        {"$group": {"_id": {"genres": "$_id.genres"}, "filmPlusRating": {"$push": "$filmPlusRating"}}},
+        {"$project": {"_id": 1, "filmPlusRating": {"$slice": ["$filmPlusRating", N]}}}
+    ])
+    return result
+
+# for i in top_N_movies_for_each_genre_with_highest_IMDB(10):
+#     print(i)
